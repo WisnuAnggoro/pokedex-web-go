@@ -3,22 +3,30 @@ package handler
 import (
 	"html/template"
 	"net/http"
+
+	"github.com/wisnuanggoro/pokedex-web-go/pokemon"
 )
 
 type handler struct {
-	templates *template.Template
+	templates  *template.Template
+	pokemonSvc pokemon.Service
 }
 
 type HomeHandler interface {
 	IndexList(w http.ResponseWriter, r *http.Request)
 }
 
-func NewHomeHandler(templates *template.Template) HomeHandler {
+func NewHomeHandler(templates *template.Template, pokemonSvc pokemon.Service) HomeHandler {
 	return &handler{
-		templates: templates,
+		templates:  templates,
+		pokemonSvc: pokemonSvc,
 	}
 }
 
 func (h *handler) IndexList(w http.ResponseWriter, r *http.Request) {
-	h.templates.ExecuteTemplate(w, "index.gohtml", nil)
+	resp, err := h.pokemonSvc.GetPokemonCardList(0, 0)
+	if err != nil {
+		return
+	}
+	h.templates.ExecuteTemplate(w, "index.gohtml", resp)
 }
