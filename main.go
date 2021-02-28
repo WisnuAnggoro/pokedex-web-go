@@ -29,10 +29,12 @@ func main() {
 
 	// Initialize handlers
 	homeHandler := handler.NewHomeHandler(templates, pokemonSvc)
+	detailHandler := handler.NewDetailHandler(templates, pokemonSvc)
 
 	// Initialize router
 	r := mux.NewRouter()
 	r.HandleFunc("/", homeHandler.IndexList).Methods("GET")
+	r.HandleFunc("/detail/{id}", detailHandler.DetailPage).Methods("GET")
 
 	// Initialize static folder
 	fs := http.FileServer(http.Dir("./static"))

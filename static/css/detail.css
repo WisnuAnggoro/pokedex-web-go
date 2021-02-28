@@ -1,0 +1,95 @@
+#row-header,
+.row-detail {
+    text-align: center;
+}
+
+.row-detail {
+    margin-top: 50px;
+}
+
+.id-box {
+    padding-top: 15px;
+    font-size: 150%;
+    color: var(--id-text-color);
+}
+
+.name-box {
+    padding-top: 5px;
+    font-weight: 600;
+    font-size: 200%;
+    text-transform: capitalize;
+}
+
+.sprite {
+    width: 550px;
+    height: 550px;
+    background-color: var(--card-box-color);
+    padding: 50px;
+    border-radius: 10px;
+}
+
+.detail-title {
+    font-weight: 600;
+    font-size: 125%;
+    margin-bottom: 5px;
+}
+
+.detail-value {
+    margin-bottom: 20px;
+}
+
+#abilities-value {
+    text-transform: capitalize;
+    line-height: 30px;
+}
+
+.detail-type {
+    display: inline-block;
+    font-family: 'Lato', 'Arial', sans-serif;
+    border-radius: 5px;
+    width: 125px;
+    text-align: center;
+    text-transform: capitalize;
+    padding: 10px 0;
+    margin: 7px;
+}
+
+.row-evolve {
+    text-align: center;
+}
+
+/* .evolve-details {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.evolve-detail {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.evolve-detail-0 {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+.evolve-detail-1 {
+    display: inline-block;
+    margin: 10px;
+} */
+
+.evolve-details {
+    display: block;
+    margin-bottom: 100px;
+}
+
+.evolve-detail-0 {
+    display: block;
+}
+
+.evolve-detail-1 {
+    display: inline-block;
+}
