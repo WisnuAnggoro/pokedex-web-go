@@ -1,6 +1,8 @@
 package config
 
 import (
+	"html/template"
+
 	"github.com/kelseyhightower/envconfig"
 )
 
@@ -9,11 +11,12 @@ type Config struct {
 	// Setting port for gin
 	Port string `envconfig:"PORT" default:"8080"`
 
-	// Cache
-	CacheDuration string `envconfig:"CACHE_DURATION" default:"0"`
+	// PokeAPI Setting
+	PokeAPICacheDuration string `envconfig:"POKEAPI_CACHE_DURATION" default:"0"`
 
-	// Pokemon Sprite
-	PokemonSprite string `envconfig:"POKEMON_SPRITE" default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/%v.png"`
+	// Rendering HTML Template
+	UseTemplateCache bool `envconfig:"USE_TEMPLATE_CACHE" default:"false"`
+	TemplateCache    map[string]*template.Template
 }
 
 // Get to get defined configuration

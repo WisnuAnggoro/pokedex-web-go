@@ -1,32 +1,40 @@
 package handlers
 
 import (
-	"html/template"
+	"fmt"
 	"net/http"
 
-	"github.com/wisnuanggoro/pokedex-web-go/models/pokemon"
+	"github.com/mtslzr/pokeapi-go"
+	"github.com/wisnuanggoro/pokedex-web-go/models"
+	"github.com/wisnuanggoro/pokedex-web-go/utils/render"
 )
 
 type handler struct {
-	templates  *template.Template
-	pokemonSvc pokemon.Service
+	render       render.Render
+	errorHandler ErrorHandler
 }
 
 type HomeHandler interface {
-	IndexList(w http.ResponseWriter, r *http.Request)
+	CardList(w http.ResponseWriter, r *http.Request)
 }
 
-func NewHomeHandler(templates *template.Template, pokemonSvc pokemon.Service) HomeHandler {
+func NewHomeHandler(render render.Render, errorHandler ErrorHandler) HomeHandler {
 	return &handler{
-		templates:  templates,
-		pokemonSvc: pokemonSvc,
+		render:       render,
+		errorHandler: errorHandler,
 	}
 }
 
-func (h *handler) IndexList(w http.ResponseWriter, r *http.Request) {
-	resp, err := h.pokemonSvc.GetPokemonCardList(0, 0)
+func (h *handler) CardList(w http.ResponseWriter, r *http.Request) {
+	p, err := pokeapi.Resource("pokemon", 0, 10000)
 	if err != nil {
+		fmt.Errorf("%s", err.Error())
 		return
 	}
-	h.templates.ExecuteTemplate(w, "index.gohtml", resp)
+
+	data := make(map[string]interface{})
+	data["results"] = p.Results
+	h.render.RenderTemplate(w, "home.page.gohtml", &models.TemplateData{
+		Data: data,
+	})
 }

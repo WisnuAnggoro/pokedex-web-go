@@ -1,39 +1,25 @@
 package handlers
 
 import (
-	"fmt"
-	"html/template"
-	"log"
 	"net/http"
 
-	"github.com/gorilla/mux"
-	"github.com/wisnuanggoro/pokedex-web-go/models/pokemon"
+	"github.com/wisnuanggoro/pokedex-web-go/utils/render"
 )
 
 type detailHandler struct {
-	templates  *template.Template
-	pokemonSvc pokemon.Service
+	render render.Render
 }
 
 type DetailHandler interface {
 	DetailPage(w http.ResponseWriter, r *http.Request)
 }
 
-func NewDetailHandler(templates *template.Template, pokemonSvc pokemon.Service) DetailHandler {
+func NewDetailHandler(render render.Render) DetailHandler {
 	return &detailHandler{
-		templates:  templates,
-		pokemonSvc: pokemonSvc,
+		render: render,
 	}
 }
 
 func (h *detailHandler) DetailPage(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-	// id := vars["id"]
-	fmt.Println("masuk1")
-	_, err := h.pokemonSvc.GetPokemonByID(vars["id"])
-	if err != nil {
-		log.Println(err)
-	}
-	fmt.Println("masuk2")
-	h.templates.ExecuteTemplate(w, "detail.gohtml", nil)
+	h.render.RenderTemplate(w, "detail.page.gohtml", nil)
 }

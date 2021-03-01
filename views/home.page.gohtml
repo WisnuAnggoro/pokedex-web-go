@@ -1,0 +1,12 @@
+{{template "base" .}}
+
+{{define "title"}}
+    Pokedex - All
+{{end}}
+
+{{define "content"}}
+    <h1>Pokemon List</h1>
+    {{range index .Data "results"}}
+        <h2>{{.Name}}</h2>
+    {{end}}
+{{end}}

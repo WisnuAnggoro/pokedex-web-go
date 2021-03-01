@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-	"html/template"
+	"log"
 	"net/http"
 	"strconv"
 	"time"
@@ -11,30 +11,35 @@ import (
 	"github.com/mtslzr/pokeapi-go"
 	"github.com/wisnuanggoro/pokedex-web-go/config"
 	"github.com/wisnuanggoro/pokedex-web-go/handlers"
-	"github.com/wisnuanggoro/pokedex-web-go/models/pokemon"
+	"github.com/wisnuanggoro/pokedex-web-go/utils/render"
 )
 
 func main() {
 	// Get configuration
 	cfg := config.Get()
 
-	// Set cache expiration for pokeapi
-	cacheDuration, _ := strconv.Atoi(cfg.CacheDuration)
+	// Set cache expiration for PokeAPI
+	cacheDuration, _ := strconv.Atoi(cfg.PokeAPICacheDuration)
 	pokeapi.CacheSettings.CustomExpire = time.Duration(cacheDuration)
 
-	// Initialize templates
-	templates := template.Must(template.ParseGlob("views/*.gohtml"))
+	// Initialize utilities
+	renderUtil := render.NewRender(&cfg)
 
-	// Initialize Service
-	pokemonSvc := pokemon.NewService(cfg.PokemonSprite)
+	// Create template cache
+	templateCache, err := renderUtil.CreateTemplateCache()
+	if err != nil {
+		log.Fatal("Cannot create template cache")
+	}
+	cfg.TemplateCache = templateCache
+	fmt.Println(fmt.Printf("%v", cfg.TemplateCache))
 
 	// Initialize handlers
-	homeHandler := handlers.NewHomeHandler(templates, pokemonSvc)
-	detailHandler := handlers.NewDetailHandler(templates, pokemonSvc)
+	homeHandler := handlers.NewHomeHandler(renderUtil)
+	detailHandler := handlers.NewDetailHandler(renderUtil)
 
 	// Initialize router
 	r := mux.NewRouter()
-	r.HandleFunc("/", homeHandler.IndexList).Methods("GET")
+	r.HandleFunc("/", homeHandler.CardList).Methods("GET")
 	r.HandleFunc("/detail/{id}", detailHandler.DetailPage).Methods("GET")
 
 	// Initialize static folder
@@ -43,7 +48,7 @@ func main() {
 	fsCSS := http.FileServer(http.Dir("./views/assets/css"))
 	r.PathPrefix("/assets/css/").Handler(http.StripPrefix("/assets/css/", fsCSS))
 	fsJs := http.FileServer(http.Dir("./views/assets/js"))
-	r.PathPrefix("/assets/js/").Handler(http.StripPrefix("/assets/css/", fsJs))
+	r.PathPrefix("/assets/js/").Handler(http.StripPrefix("/assets/js/", fsJs))
 
 	// Run server
 	fmt.Println(fmt.Sprintf("Starting application on port %s", cfg.Port))

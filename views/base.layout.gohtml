@@ -1,4 +1,6 @@
-{{define "_head"}}
+{{define "base"}}
+<!doctype html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -7,5 +9,18 @@
     <title>{{block "title" .}}{{end}}</title>
     <link rel="shortcut icon" href="/assets/img/favicon.ico" type="image/x-icon">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    
+    {{block "css" .}}
+    {{end}}
 </head>
+<body>
+    {{template "navbar"}}
+
+    {{block "content" .}}
+    {{end}}
+
+    {{block "js" .}}
+    {{end}}
+</body>
+</html>
 {{end}}
