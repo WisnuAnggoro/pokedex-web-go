@@ -1,10 +1,10 @@
-package handler
+package handlers
 
 import (
 	"html/template"
 	"net/http"
 
-	"github.com/wisnuanggoro/pokedex-web-go/pokemon"
+	"github.com/wisnuanggoro/pokedex-web-go/models/pokemon"
 )
 
 type handler struct {
