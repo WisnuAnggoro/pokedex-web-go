@@ -31,11 +31,11 @@ func main() {
 		log.Fatal("Cannot create template cache")
 	}
 	cfg.TemplateCache = templateCache
-	fmt.Println(fmt.Printf("%v", cfg.TemplateCache))
 
 	// Initialize handlers
-	homeHandler := handlers.NewHomeHandler(renderUtil)
-	detailHandler := handlers.NewDetailHandler(renderUtil)
+	errorHandler := handlers.NewErrorHandler(renderUtil)
+	homeHandler := handlers.NewHomeHandler(renderUtil, errorHandler)
+	detailHandler := handlers.NewDetailHandler(renderUtil, errorHandler)
 
 	// Initialize router
 	r := mux.NewRouter()

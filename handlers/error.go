@@ -14,8 +14,8 @@ type ErrorHandler interface {
 	ShowErrorPage(w http.ResponseWriter, r *http.Request, status int)
 }
 
-func NewErrorHandler(render render.Render) HomeHandler {
-	return &handler{
+func NewErrorHandler(render render.Render) ErrorHandler {
+	return &errorHandler{
 		render: render,
 	}
 }

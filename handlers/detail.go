@@ -7,16 +7,18 @@ import (
 )
 
 type detailHandler struct {
-	render render.Render
+	render       render.Render
+	errorHandler ErrorHandler
 }
 
 type DetailHandler interface {
 	DetailPage(w http.ResponseWriter, r *http.Request)
 }
 
-func NewDetailHandler(render render.Render) DetailHandler {
+func NewDetailHandler(render render.Render, errorHandler ErrorHandler) DetailHandler {
 	return &detailHandler{
-		render: render,
+		render:       render,
+		errorHandler: errorHandler,
 	}
 }
 
