@@ -2,15 +2,12 @@ package main
 
 import (
 	"fmt"
-	"log"
 	"net/http"
 	"strconv"
 	"time"
 
-	"github.com/gorilla/mux"
 	"github.com/mtslzr/pokeapi-go"
 	"github.com/wisnuanggoro/pokedex-web-go/config"
-	"github.com/wisnuanggoro/pokedex-web-go/handlers"
 	"github.com/wisnuanggoro/pokedex-web-go/utils/render"
 )
 
@@ -25,32 +22,10 @@ func main() {
 	// Initialize utilities
 	renderUtil := render.NewRender(&cfg)
 
-	// Create template cache
-	templateCache, err := renderUtil.CreateTemplateCache()
-	if err != nil {
-		log.Fatal("Cannot create template cache")
-	}
-	cfg.TemplateCache = templateCache
-
-	// Initialize handlers
-	errorHandler := handlers.NewErrorHandler(renderUtil)
-	homeHandler := handlers.NewHomeHandler(renderUtil, errorHandler)
-	detailHandler := handlers.NewDetailHandler(renderUtil, errorHandler)
-
-	// Initialize router
-	r := mux.NewRouter()
-	r.HandleFunc("/", homeHandler.CardList).Methods("GET")
-	r.HandleFunc("/detail/{id}", detailHandler.DetailPage).Methods("GET")
-
-	// Initialize static folder
-	fsImage := http.FileServer(http.Dir("./views/assets/img"))
-	r.PathPrefix("/assets/img/").Handler(http.StripPrefix("/assets/img/", fsImage))
-	fsCSS := http.FileServer(http.Dir("./views/assets/css"))
-	r.PathPrefix("/assets/css/").Handler(http.StripPrefix("/assets/css/", fsCSS))
-	fsJs := http.FileServer(http.Dir("./views/assets/js"))
-	r.PathPrefix("/assets/js/").Handler(http.StripPrefix("/assets/js/", fsJs))
+	// Initialize Router
+	router := InitRouter(renderUtil, &cfg)
 
 	// Run server
 	fmt.Println(fmt.Sprintf("Starting application on port %s", cfg.Port))
-	http.ListenAndServe(":"+cfg.Port, r)
+	http.ListenAndServe(":"+cfg.Port, router)
 }
