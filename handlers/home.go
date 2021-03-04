@@ -59,7 +59,6 @@ func (h *handler) CardList(w http.ResponseWriter, r *http.Request) {
 		}
 
 		// Get Pokemon Sprite
-		fmt.Println(h.cfg.PokemonSprites)
 		pokeID := pokeDetail.ID
 		pokeSprite := ""
 		for _, sprite := range h.cfg.PokemonSprites {
