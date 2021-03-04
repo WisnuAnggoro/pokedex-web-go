@@ -25,7 +25,7 @@ func InitRouter(render render.Render, cfg *config.Config) *mux.Router {
 
 	// Initialize router
 	r := mux.NewRouter()
-	r.HandleFunc("/", homeHandler.CardList).Methods("GET")
+	r.HandleFunc("/", homeHandler.HomePage).Methods("GET")
 	r.HandleFunc("/detail/{id}", detailHandler.DetailPage).Methods("GET")
 
 	// Initialize static folder
