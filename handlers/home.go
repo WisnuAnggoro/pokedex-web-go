@@ -75,7 +75,7 @@ func (h *handler) HomePage(w http.ResponseWriter, r *http.Request) {
 	data := make(map[string]interface{})
 	data["pokemon_card_list"] = pokemonCardList
 	data["pagination"] = pagination
-	h.render.RenderTemplate(w, "home.page.gohtml", &models.TemplateData{
+	h.render.RenderTemplate(w, "page.home.gohtml", &models.TemplateData{
 		Data: data,
 	})
 

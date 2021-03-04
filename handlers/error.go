@@ -23,6 +23,6 @@ func NewErrorHandler(render render.Render) ErrorHandler {
 func (h *errorHandler) ShowErrorPage(w http.ResponseWriter, r *http.Request, status int) {
 	w.WriteHeader(status)
 	if status == http.StatusNotFound {
-		h.render.RenderTemplate(w, "notfound.page.gohtml", nil)
+		h.render.RenderTemplate(w, "page.notfound.gohtml", nil)
 	}
 }

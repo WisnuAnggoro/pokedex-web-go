@@ -23,5 +23,5 @@ func NewDetailHandler(render render.Render, errorHandler ErrorHandler) DetailHan
 }
 
 func (h *detailHandler) DetailPage(w http.ResponseWriter, r *http.Request) {
-	h.render.RenderTemplate(w, "detail.page.gohtml", nil)
+	h.render.RenderTemplate(w, "page.detail.gohtml", nil)
 }
