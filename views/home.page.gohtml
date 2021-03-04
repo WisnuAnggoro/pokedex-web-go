@@ -5,8 +5,9 @@
 {{end}}
 
 {{define "content"}}
-    <h1>Pokemon List</h1>
-    {{range index .Data "results"}}
-        <h2>{{.Name}}</h2>
-    {{end}}
+    {{/* <h1>Pokemon List</h1>
+    {{range index .Data "pokemon_card_list"}}
+        <h2>{{.Sprite}}</h2>
+    {{end}} */}}
+    {{template "pokelist" .}}
 {{end}}

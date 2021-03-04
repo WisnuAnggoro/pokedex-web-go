@@ -20,7 +20,7 @@ func InitRouter(render render.Render, cfg *config.Config) *mux.Router {
 
 	// Initialize handlers
 	errorHandler := handlers.NewErrorHandler(render)
-	homeHandler := handlers.NewHomeHandler(render, errorHandler)
+	homeHandler := handlers.NewHomeHandler(*cfg, render, errorHandler)
 	detailHandler := handlers.NewDetailHandler(render, errorHandler)
 
 	// Initialize router

@@ -14,6 +14,9 @@ type Config struct {
 	// PokeAPI Setting
 	PokeAPICacheDuration string `envconfig:"POKEAPI_CACHE_DURATION" default:"0"`
 
+	// Pokemon Sprite
+	PokemonSprite string `envconfig:"POKEMON_SPRITE" default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/%v.svg"`
+
 	// Rendering HTML Template
 	UseTemplateCache bool `envconfig:"USE_TEMPLATE_CACHE" default:"false"`
 	TemplateCache    map[string]*template.Template

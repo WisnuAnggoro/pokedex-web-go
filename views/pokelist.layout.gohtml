@@ -1,0 +1,40 @@
+{{define "pokelist"}}
+    <section>
+        <div class="container" id="card-list">
+            <div class="row">
+                {{range index .Data "pokemon_card_list"}}
+                <div class="col-sm-6 col-md-4 col-lg-3 col-xl-3 poke-card">
+                    <a class="poke-card-link" href="/detail/{{.Name}}">
+                        <div class="card bg-light">
+                            <div class="card-body text-center">
+                                <div><img src="{{.Sprite}}"></div>
+                                <div class="poke-name text-capitalize">
+                                    <h6 class="text-muted d-inline-block mb-2">#{{.IDFormatted}}</h6>
+                                    <h4>{{.Name}}</h4>
+                                </div>
+                                <div class="poke-types">
+                                    {{range .Types}}
+                                    <span class="badge {{.}} text-capitalize font-weight-normal">{{.}}</span>
+                                    {{end}}
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                {{end}}
+            </div>
+        </div>
+        <div class="text-center" id="pagination">
+            {{$pagination := index .Data "pagination"}}
+            <nav class="d-inline-block">
+                <ul class="pagination">
+                    <li class="page-item {{if eq $pagination.CurrentPage 1}}disabled{{end}}"><a class="page-link" href="/?page={{$pagination.PreviousPage}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
+                    {{range $pagination.PageList}}
+                    <li class="page-item {{if eq . $pagination.CurrentPage}}disabled{{end}}"><a class="page-link" href="/?page={{.}}">{{.}}</a></li>
+                    {{end}}
+                    <li class="page-item {{if eq $pagination.CurrentPage $pagination.TotalPage}}disabled{{end}}"><a class="page-link" href="/?page={{$pagination.NextPage}}" aria-label="Next"><span aria-hidden="true">»</span></a></li>
+                </ul>
+            </nav>
+        </div>
+    </section>
+{{end}}
