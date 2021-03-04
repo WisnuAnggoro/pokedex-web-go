@@ -12,10 +12,11 @@ type Config struct {
 	Port string `envconfig:"PORT" default:"8080"`
 
 	// PokeAPI Setting
-	PokeAPICacheDuration string `envconfig:"POKEAPI_CACHE_DURATION" default:"0"`
+	PokeAPICacheDuration string `envconfig:"POKEAPI_CACHE_DURATION" default:"3600"`
 
 	// Pokemon Sprite
-	PokemonSprite string `envconfig:"POKEMON_SPRITE" default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/%v.svg"`
+	PokemonSprite  string `envconfig:"POKEMON_SPRITE" default:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/%v.svg,https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/%v.png"`
+	PokemonSprites []string
 
 	// Rendering HTML Template
 	UseTemplateCache bool `envconfig:"USE_TEMPLATE_CACHE" default:"false"`

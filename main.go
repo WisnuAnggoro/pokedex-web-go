@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/mtslzr/pokeapi-go"
@@ -14,6 +15,9 @@ import (
 func main() {
 	// Get configuration
 	cfg := config.Get()
+
+	// Split PokemonSprite
+	cfg.PokemonSprites = strings.Split(cfg.PokemonSprite, ",")
 
 	// Set cache expiration for PokeAPI
 	cacheDuration, _ := strconv.Atoi(cfg.PokeAPICacheDuration)

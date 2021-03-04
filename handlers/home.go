@@ -51,22 +51,41 @@ func (h *handler) CardList(w http.ResponseWriter, r *http.Request) {
 	// Create Card List
 	pokemonCardList := []models.PokemonCard{}
 	for _, v := range pokemon.Results {
+		// Get Pokemon Detail
 		pokeDetail, err := pokeapi.Pokemon(v.Name)
 		if err != nil {
 			fmt.Errorf("Error in getting detail for '%s': %s", v.Name, err.Error())
 			return
 		}
 
+		// Get Pokemon Sprite
+		fmt.Println(h.cfg.PokemonSprites)
+		pokeID := pokeDetail.ID
+		pokeSprite := ""
+		for _, sprite := range h.cfg.PokemonSprites {
+			checkingSprite := fmt.Sprintf(sprite, pokeID)
+			resp, err := http.Head(checkingSprite)
+			if err == nil && resp.StatusCode == http.StatusOK {
+				pokeSprite = checkingSprite
+				break
+			}
+		}
+		if pokeSprite == "" {
+			pokeSprite = "/assets/img/pokeball.png"
+		}
+
+		// Map Pokemon Types
 		pokeTypes := []string{}
 		for _, t := range pokeDetail.Types {
 			pokeTypes = append(pokeTypes, t.Type.Name)
 		}
 
+		// Construct Pokemon Card to be fed to HTML
 		pokemonCard := models.PokemonCard{
-			ID:          pokeDetail.ID,
-			IDFormatted: fmt.Sprintf("%03d", pokeDetail.ID),
+			ID:          pokeID,
+			IDFormatted: fmt.Sprintf("%03d", pokeID),
 			Name:        pokeDetail.Name,
-			Sprite:      fmt.Sprintf(h.cfg.PokemonSprite, pokeDetail.ID),
+			Sprite:      pokeSprite,
 			Types:       pokeTypes,
 		}
 
@@ -87,7 +106,6 @@ func (h *handler) CardList(w http.ResponseWriter, r *http.Request) {
 		TotalPage:    totalPage,
 		PageList:     pageList,
 	}
-	fmt.Println(limit, offset, pagination)
 
 	// Send data to template
 	data := make(map[string]interface{})
