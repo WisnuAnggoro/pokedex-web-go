@@ -39,14 +39,14 @@
   margin: 15px 0;
 }
 
-.poke-card-link:hover {
-  animation-name: moveUpDown;
-  animation-duration: 0.3s;
-}
-
 .poke-card-link:link, .poke-card-link:visited {
   text-decoration: none;
   color: black;
+}
+
+.poke-card:hover {
+  animation-name: moveUpDown;
+  animation-duration: 0.3s;
 }
 
 .card-body img {
