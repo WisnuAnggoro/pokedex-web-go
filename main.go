@@ -11,6 +11,7 @@ import (
 	"github.com/mtslzr/pokeapi-go"
 	"github.com/wisnuanggoro/pokedex-web-go/config"
 	"github.com/wisnuanggoro/pokedex-web-go/handlers"
+	"github.com/wisnuanggoro/pokedex-web-go/logics"
 	"github.com/wisnuanggoro/pokedex-web-go/utils/render"
 	"github.com/wisnuanggoro/pokedex-web-go/utils/router"
 )
@@ -36,10 +37,13 @@ func main() {
 	}
 	cfg.TemplateCache = templateCache
 
+	// Initialize Logics
+	pokemonLogic := logics.NewPokemonLogic(cfg)
+
 	// Initialize handlers
 	errorHandler := handlers.NewErrorHandler(renderUtil)
 	homeHandler := handlers.NewHomeHandler(cfg, renderUtil, errorHandler)
-	detailHandler := handlers.NewDetailHandler(renderUtil, errorHandler)
+	detailHandler := handlers.NewDetailHandler(renderUtil, errorHandler, pokemonLogic)
 
 	// Initialize Router
 	routerUtil := router.NewRouter(errorHandler, homeHandler, detailHandler)

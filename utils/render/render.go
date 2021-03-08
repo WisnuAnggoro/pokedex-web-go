@@ -38,7 +38,7 @@ func (rd *render) RenderTemplate(w http.ResponseWriter, tmpl string, td *models.
 	} else {
 		tc, _ = rd.CreateTemplateCache()
 	}
-	fmt.Println(tc)
+
 	t, ok := tc[tmpl]
 	if !ok {
 		log.Fatal("Could not get template from template cache")

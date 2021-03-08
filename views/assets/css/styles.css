@@ -174,3 +174,23 @@
   color: #000;
 }
 
+.top-arrow a:link, .top-arrow a:visited {
+  text-decoration: none;
+}
+
+.top-arrow i, .top-arrow span {
+  font-size: 25px;
+  padding: 25px 5px;
+}
+
+.poke-detail img {
+  width: 100%;
+  height: 100%;
+  padding: 10px;
+}
+
+.poke-abilities .badge {
+  padding: 10px;
+  margin: 5px 20px;
+}
+
