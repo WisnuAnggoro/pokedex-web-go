@@ -12,6 +12,7 @@ import (
 	"github.com/wisnuanggoro/pokedex-web-go/config"
 	"github.com/wisnuanggoro/pokedex-web-go/handlers"
 	"github.com/wisnuanggoro/pokedex-web-go/logics"
+	"github.com/wisnuanggoro/pokedex-web-go/utils/pagination"
 	"github.com/wisnuanggoro/pokedex-web-go/utils/render"
 	"github.com/wisnuanggoro/pokedex-web-go/utils/router"
 )
@@ -29,6 +30,7 @@ func main() {
 
 	// Initialize utilities
 	renderUtil := render.NewRender(&cfg)
+	paginationUtil := pagination.NewPagination()
 
 	// Create template cache
 	templateCache, err := renderUtil.CreateTemplateCache()
@@ -42,7 +44,7 @@ func main() {
 
 	// Initialize handlers
 	errorHandler := handlers.NewErrorHandler(renderUtil)
-	homeHandler := handlers.NewHomeHandler(cfg, renderUtil, errorHandler)
+	homeHandler := handlers.NewHomeHandler(cfg, renderUtil, paginationUtil, errorHandler)
 	detailHandler := handlers.NewDetailHandler(renderUtil, errorHandler, pokemonLogic)
 
 	// Initialize Router

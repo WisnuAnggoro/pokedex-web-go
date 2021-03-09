@@ -13,12 +13,14 @@ import (
 	"github.com/mtslzr/pokeapi-go/structs"
 	"github.com/wisnuanggoro/pokedex-web-go/config"
 	"github.com/wisnuanggoro/pokedex-web-go/models"
+	"github.com/wisnuanggoro/pokedex-web-go/utils/pagination"
 	"github.com/wisnuanggoro/pokedex-web-go/utils/render"
 )
 
 type handler struct {
 	cfg          config.Config
 	render       render.Render
+	pagination   pagination.Pagination
 	errorHandler ErrorHandler
 }
 
@@ -26,10 +28,11 @@ type HomeHandler interface {
 	HomePage(w http.ResponseWriter, r *http.Request)
 }
 
-func NewHomeHandler(cfg config.Config, render render.Render, errorHandler ErrorHandler) HomeHandler {
+func NewHomeHandler(cfg config.Config, render render.Render, pagination pagination.Pagination, errorHandler ErrorHandler) HomeHandler {
 	return &handler{
 		cfg:          cfg,
 		render:       render,
+		pagination:   pagination,
 		errorHandler: errorHandler,
 	}
 }
@@ -57,28 +60,15 @@ func (h *handler) HomePage(w http.ResponseWriter, r *http.Request) {
 	pokemonCardList := CreatePokemonCardList(pokemon.Results, h.cfg.PokemonSprites)
 
 	// Setup Pagination
-	currentPage := offset/limit + 1
-	totalPage := pokemon.Count/limit + 1
-	pageList := make([]int, totalPage)
-	for i := 0; i < totalPage; i++ {
-		pageList[i] = i + 1
-	}
-	pagination := models.Pagination{
-		PreviousPage: currentPage - 1,
-		CurrentPage:  currentPage,
-		NextPage:     currentPage + 1,
-		TotalPage:    totalPage,
-		PageList:     pageList,
-	}
+	paginationData := h.pagination.GetPagination(offset, limit, pokemon.Count)
 
 	// Send data to template
 	data := make(map[string]interface{})
 	data["pokemon_card_list"] = pokemonCardList
-	data["pagination"] = pagination
+	data["pagination"] = paginationData
 	h.render.RenderTemplate(w, "page.home.gohtml", &models.TemplateData{
 		Data: data,
 	})
-
 }
 
 func CreatePokemonCardList(results []structs.Result, sprites []string) []models.PokemonCard {

@@ -1,6 +1,6 @@
-package models
+package pagination
 
-type Pagination struct {
+type PaginationData struct {
 	PreviousPage int   `json:"previous_page"`
 	CurrentPage  int   `json:"current_page"`
 	NextPage     int   `json:"next_page"`
