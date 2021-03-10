@@ -44,11 +44,12 @@ func main() {
 
 	// Initialize handlers
 	errorHandler := handlers.NewErrorHandler(renderUtil)
-	homeHandler := handlers.NewHomeHandler(cfg, renderUtil, paginationUtil, errorHandler)
-	detailHandler := handlers.NewDetailHandler(renderUtil, errorHandler, pokemonLogic)
+	homeHandler := handlers.NewHomeHandler(renderUtil, pokemonLogic, paginationUtil, errorHandler)
+	detailHandler := handlers.NewDetailHandler(renderUtil, pokemonLogic, errorHandler)
+	searchHandler := handlers.NewSearchHandler(renderUtil, pokemonLogic, paginationUtil, errorHandler)
 
 	// Initialize Router
-	routerUtil := router.NewRouter(errorHandler, homeHandler, detailHandler)
+	routerUtil := router.NewRouter(errorHandler, homeHandler, detailHandler, searchHandler)
 	router := routerUtil.InitRouter(renderUtil, &cfg)
 
 	// Run server

@@ -13,19 +13,19 @@ import (
 
 type detailHandler struct {
 	render       render.Render
-	errorHandler ErrorHandler
 	pokemonLogic logics.PokemonLogic
+	errorHandler ErrorHandler
 }
 
 type DetailHandler interface {
 	DetailPage(w http.ResponseWriter, r *http.Request)
 }
 
-func NewDetailHandler(render render.Render, errorHandler ErrorHandler, pokemonLogic logics.PokemonLogic) DetailHandler {
+func NewDetailHandler(render render.Render, pokemonLogic logics.PokemonLogic, errorHandler ErrorHandler) DetailHandler {
 	return &detailHandler{
 		render:       render,
-		errorHandler: errorHandler,
 		pokemonLogic: pokemonLogic,
+		errorHandler: errorHandler,
 	}
 }
 

@@ -24,8 +24,10 @@
                 {{end}}
             </div>
         </div>
+        {{$pagination := index .Data "pagination"}}
+        {{/* Only Pagination if total page greater than 1 */}}
+        {{if gt $pagination.TotalPage 1}}
         <div class="text-center" id="pagination">
-            {{$pagination := index .Data "pagination"}}
             <nav class="d-inline-block">
                 <ul class="pagination">
                     <li class="page-item {{if eq $pagination.CurrentPage 1}}disabled{{end}}"><a class="page-link" href="/?page={{$pagination.PreviousPage}}" aria-label="Previous"><span aria-hidden="true">«</span></a></li>
@@ -36,5 +38,6 @@
                 </ul>
             </nav>
         </div>
+        {{end}}
     </section>
 {{end}}

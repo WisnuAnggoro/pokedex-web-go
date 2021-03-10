@@ -13,6 +13,7 @@ type router struct {
 	errorHandler  handlers.ErrorHandler
 	homeHandler   handlers.HomeHandler
 	detailHandler handlers.DetailHandler
+	searchHandler handlers.SearchHandler
 }
 
 type Router interface {
@@ -22,11 +23,13 @@ type Router interface {
 func NewRouter(
 	errorHandler handlers.ErrorHandler,
 	homeHandler handlers.HomeHandler,
-	detailHandler handlers.DetailHandler) Router {
+	detailHandler handlers.DetailHandler,
+	searchHandler handlers.SearchHandler) Router {
 	return &router{
 		errorHandler:  errorHandler,
 		homeHandler:   homeHandler,
 		detailHandler: detailHandler,
+		searchHandler: searchHandler,
 	}
 }
 
@@ -36,6 +39,7 @@ func (rtr *router) InitRouter(render render.Render, cfg *config.Config) *mux.Rou
 	r := mux.NewRouter()
 	r.HandleFunc("/", rtr.homeHandler.HomePage).Methods("GET")
 	r.HandleFunc("/detail/{id}", rtr.detailHandler.DetailPage).Methods("GET")
+	r.HandleFunc("/search", rtr.searchHandler.SearchPage).Methods("GET")
 
 	// Initialize static folder
 	fsImage := http.FileServer(http.Dir("./views/assets/img"))
