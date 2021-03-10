@@ -3,9 +3,17 @@
         <div class="container-fluid" id="menu-bar"><a class="navbar-brand" href="/"><img id="logo" src="/assets/img/logo.png"></a><button data-toggle="collapse" class="navbar-toggler" data-target="#navcol-1"><span class="sr-only">Toggle navigation</span><span class="navbar-toggler-icon"></span></button>
             <div class="collapse navbar-collapse" id="navcol-1">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item text-white"><a class="nav-link active" href="#">First Item</a></li>
+                    {{/* <li class="nav-item text-white"><a class="nav-link active" href="#">First Item</a></li>
                     <li class="nav-item text-white"><a class="nav-link" href="#">Second Item</a></li>
                     <li class="nav-item text-white"><a class="nav-link" href="#">Third Item</a></li>
+                    <li class="nav-item text-white"> */}}
+                        <form class="form-inline" action="/search" method="get" target="_self">
+                            <div class="input-group">
+                                <div class="input-group-prepend"><span class="input-group-text">Search Pokemon</span></div><input class="form-control" type="text" name="q">
+                                <div class="input-group-append"><button class="btn btn-primary" type="submit">Go!</button></div>
+                            </div>
+                        </form>
+                    </li>
                 </ul>
             </div>
         </div>
