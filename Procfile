@@ -1,0 +1,1 @@
+web: pokedex-web-go
