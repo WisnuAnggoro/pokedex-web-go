@@ -52,15 +52,21 @@
             <div class="row mb-5">
                 <div class="col">
                     <h3 class="text-center">Stats</h3>
-                    <div class="table-responsive table-borderless">
-                        <table class="table table-bordered table-sm">
-                            <tbody>
-                                {{range $pokeDetail.Stats}}
+                    <div class="table-responsive text-center">
+                        <table class="table">
+                            <thead>
                                 <tr>
-                                    <td class="text-capitalize text-right w-50">{{.Name}}:</td>
-                                    <td>{{.BaseStat}}</td>
+                                    {{range $pokeDetail.Stats}}
+                                    <th>{{.Name}}</th>
+                                    {{end}}
                                 </tr>
-                                {{end}}
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {{range $pokeDetail.Stats}}
+                                    <td>{{.BaseStat}}</td>
+                                    {{end}}
+                                </tr>
                             </tbody>
                         </table>
                     </div>
