@@ -42,6 +42,13 @@ func (h *searchHandler) SearchPage(w http.ResponseWriter, r *http.Request) {
 	pokeSearch, err := pokeapi.Search("pokemon", q[0])
 	if err != nil {
 		log.Errorf("Error in getting pokemon detail: %s %s", q[0], err.Error())
+		http.Redirect(w, r, "/", http.StatusSeeOther)
+		return
+	}
+
+	// Check if pokemon is found
+	if pokeSearch.Count <= 0 {
+		http.Redirect(w, r, "/", http.StatusSeeOther)
 		return
 	}
 
